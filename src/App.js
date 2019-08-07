@@ -23,9 +23,9 @@ class App extends Component {
 
 
   search = (event)=> {
-    let searchTerm = event.target.value;
+    let searchTerm = event.target.value.toUpperCase();
     let searchedPersonalities = this.state.personalities.filter((personalities)=> (
-      personalities.name.indexOf(searchTerm) >= 0
+      personalities.name.toUpperCase().indexOf(searchTerm) >= 0
     ))  
     this.setState({displayContact: searchedPersonalities})
   }
