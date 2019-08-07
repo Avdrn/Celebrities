@@ -5,7 +5,6 @@ import Personalities from "./contacts.json"
 
 class App extends Component {
   state = {
-    counter : 0,
     personalities : Personalities,
     displayContact : Personalities.slice(0,5),
     searchedPersonalities : Personalities,
@@ -22,11 +21,6 @@ class App extends Component {
     })
   }
 
-  remove = (index) => {
-    const copiedDisplay = [...this.state.displayContact]
-    copiedDisplay.splice(index, 1);
-    this.setState({displayContact: copiedDisplay});
-  }
 
   search = (event)=> {
     let searchTerm = event.target.value;
@@ -36,11 +30,60 @@ class App extends Component {
     this.setState({displayContact: searchedPersonalities})
   }
 
+  sortName = () => {
+    const copiedDisplay = [].concat(this.state.displayContact)
+    
+    copiedDisplay.sort(function(a, b) {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+    
+      // names must be equal
+      return 0;
+    });
+    this.setState({
+      displayContact: copiedDisplay
+    })
+  }
+   
+  sortPopularity = () => {
+    const copiedDisplay = [].concat(this.state.displayContact)
+    
+    copiedDisplay.sort(function(a, b) {
+      var nameA = a.popularity
+      var nameB = b.popularity
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+    
+      // names must be equal
+      return 0;
+    });
+    this.setState({
+      displayContact: copiedDisplay
+    })
+  }
+  
+  remove = (index) => {
+    debugger
+    const copiedDisplay = [...this.state.displayContact]
+    copiedDisplay.splice(index, 1);
+    this.setState({displayContact: copiedDisplay});
+  }
+
   render() {
 
-    const contactComponents = this.state.displayContact.map((contact) => (
+    const contactComponents = this.state.displayContact.map((contact, index) => (
       <Contact 
-        index={contact.index}
+        index={index}
         pictureUrl = {contact.pictureUrl} 
         name = {contact.name} 
         popularity = {contact.popularity} 
@@ -53,6 +96,10 @@ class App extends Component {
     <div className = "center-box">
       <h1>Iron Contact</h1>
       <button className="random-contact" onClick={this.addContact}>Add random contact</button>
+      <button className="random-contact" onClick={this.sortName}>Sort by Name</button>
+      <button className="random-contact" onClick={this.sortPopularity}>Sort by Popularity</button>
+
+
       <input onChange={this.search} placeholder="search" type="text"/>
 
 
