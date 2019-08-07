@@ -8,7 +8,7 @@ class App extends Component {
     counter : 0,
     personalities : Personalities,
     displayContact : Personalities.slice(0,5),
-    // searchedPersonalities : Personalities,
+    searchedPersonalities : Personalities,
    
   }
   
@@ -28,13 +28,13 @@ class App extends Component {
     this.setState({displayContact: copiedDisplay});
   }
 
-  // search = (event)=> {
-  //   let searchTerm = event.target.value;
-  //   let searchedPersonalities = this.state.personalities.filter((personalities)=> (
-  //     personalities.name.indexOf(searchTerm) >= 0
-  //   ))  
-  //   this.setState({displayContact: searchedPersonalities})
-  // }
+  search = (event)=> {
+    let searchTerm = event.target.value;
+    let searchedPersonalities = this.state.personalities.filter((personalities)=> (
+      personalities.name.indexOf(searchTerm) >= 0
+    ))  
+    this.setState({displayContact: searchedPersonalities})
+  }
 
   render() {
 
@@ -53,6 +53,8 @@ class App extends Component {
     <div className = "center-box">
       <h1>Iron Contact</h1>
       <button className="random-contact" onClick={this.addContact}>Add random contact</button>
+      <input onChange={this.search} placeholder="search" type="text"/>
+
 
       <div className="title-box">
         <div className="picture">Picture</div>
